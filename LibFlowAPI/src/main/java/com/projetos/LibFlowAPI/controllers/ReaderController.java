@@ -34,6 +34,12 @@ public class ReaderController {
         return ResponseEntity.ok().body(readers);
     }
 
+    @GetMapping(value = "/order")
+    public ResponseEntity<List<Reader>> orderByCreationDate(){
+        List<Reader> readers = service.creationDate();
+        return ResponseEntity.ok().body(readers);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<Reader> findById(@PathVariable Long id){
         Reader reader = service.findById(id);
