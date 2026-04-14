@@ -37,6 +37,10 @@ public class ReaderService {
         return repository.save(entity);
     }
 
+    public List<Reader> creationDate(){
+        return repository.findByOrderByLocalDateAsc();
+    }
+
     private void updateReader(Reader entity, Reader reader){
         entity.setName(reader.getName());
         entity.setEmail(reader.getEmail());
