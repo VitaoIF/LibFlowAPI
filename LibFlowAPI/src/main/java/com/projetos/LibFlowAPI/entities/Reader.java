@@ -14,16 +14,18 @@ public class Reader {
     private Long id;
     private String name;
     private String email;
+    private String password;
     private String phone;
     private LocalDate localDate;
 
     public Reader() {
     }
 
-    public Reader(Long id, String name, String email, String phone, LocalDate localDate) {
+    public Reader(Long id, String name, String email, String password, String phone, LocalDate localDate) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.password = password;
         this.phone = phone;
         this.localDate = localDate;
     }
@@ -60,6 +62,14 @@ public class Reader {
         this.name = name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getPhone() {
         return phone;
     }
@@ -73,11 +83,13 @@ public class Reader {
         if (o == null || getClass() != o.getClass()) return false;
 
         Reader reader = (Reader) o;
-        return Objects.equals(id, reader.id);
+        return Objects.equals(id, reader.id) && Objects.equals(email, reader.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(email);
+        return result;
     }
 }

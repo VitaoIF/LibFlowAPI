@@ -28,6 +28,19 @@ public class ReaderService {
     }
 
     public void delete(Long id){
+        repository.deleteById(id);
+    }
 
+    public Reader update(Long id, Reader reader){
+        Reader entity = repository.getReferenceById(id);
+        updateReader(entity, reader);
+        return repository.save(entity);
+    }
+
+    private void updateReader(Reader entity, Reader reader){
+        entity.setName(reader.getName());
+        entity.setEmail(reader.getEmail());
+        entity.setPhone(reader.getPhone());
+        entity.setPassword(reader.getPassword());
     }
 }

@@ -34,9 +34,22 @@ public class ReaderController {
         return ResponseEntity.ok().body(readers);
     }
 
-    @PutMapping
-    public ResponseEntity<Reader> nothingForNow(){
-        return null;
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Reader> findById(@PathVariable Long id){
+        Reader reader = service.findById(id);
+        return ResponseEntity.ok().body(reader);
+    }
+
+    @DeleteMapping(value="/{id}")
+    public ResponseEntity<Void> delete(@RequestBody Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Reader> update(@PathVariable Long id, @RequestBody Reader reader){
+        reader = service.update(id, reader);
+        return ResponseEntity.ok().body(reader);
     }
 
 }
