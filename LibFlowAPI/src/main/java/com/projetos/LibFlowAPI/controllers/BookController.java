@@ -1,5 +1,7 @@
 package com.projetos.LibFlowAPI.controllers;
 
+import com.projetos.LibFlowAPI.dtos.BookRequestDto;
+import com.projetos.LibFlowAPI.dtos.BookResponseDto;
 import com.projetos.LibFlowAPI.entities.Book;
 import com.projetos.LibFlowAPI.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,25 +20,28 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public ResponseEntity<Book> insert(@RequestBody Book book){
-        book = bookService.insert(book);
+    public ResponseEntity<BookResponseDto> insert(@RequestBody BookRequestDto dto) {
+
+        BookResponseDto response = bookService.insert(dto);
+
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(book.getId())
+                .buildAndExpand(response.getId())
                 .toUri();
-        return ResponseEntity.created(uri).body(book);
+
+        return ResponseEntity.created(uri).body(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<Book>> findAll(){
-        List<Book> bookList = bookService.findAll();
+    public ResponseEntity<List<BookResponseDto>> findAll(){
+        List<BookResponseDto> bookList = bookService.findAll();
         return ResponseEntity.ok().body(bookList);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Book> findById(@PathVariable Long id){
-        Book bookId = bookService.findById(id);
+    public ResponseEntity<BookResponseDto> findById(@PathVariable Long id){
+        BookResponseDto bookId = bookService.findById(id);
         return ResponseEntity.ok().body(bookId);
     }
 
@@ -47,8 +52,8 @@ public class BookController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Book> update(@PathVariable Long id, @RequestBody Book book){
-        book = bookService.update(id, book);
-        return ResponseEntity.ok().body(book);
+    public ResponseEntity<BookResponseDto> update(@PathVariable Long id, @RequestBody BookRequestDto dto){
+        BookResponseDto responseDto = bookService.update(id, dto);
+        return ResponseEntity.ok().body(responseDto);
     }
 }
