@@ -1,21 +1,30 @@
 package com.projetos.LibFlowAPI.entities;
 
-import jakarta.persistence.OneToMany;
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "tb_book")
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String isbn;
+
     private String title;
     private String author;
-    private String isbn;
     private String category;
     private boolean available;
 
     @OneToMany(mappedBy = "book")
-    private List<Loan> loans;
+    private List<Loan> loans = new ArrayList<>();
 
     public Book() {
     }
