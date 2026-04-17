@@ -6,6 +6,8 @@ import com.projetos.LibFlowAPI.entities.Book;
 import com.projetos.LibFlowAPI.mappers.BookMapper;
 import com.projetos.LibFlowAPI.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,11 +29,9 @@ public class BookService {
     }
 
     @Transactional(readOnly = true)
-    public List<BookResponseDto> findAll(){
-        return bookRepository.findAll()
-                .stream()
-                .map(BookMapper::toResponseDto)
-                .toList();
+    public Page<BookResponseDto> findAll(Pageable pageable) {
+        Page<Book> result = bookRepository.findAll(pageable);
+        return result.map(BookMapper::toResponseDto);
     }
 
     @Transactional(readOnly = true)

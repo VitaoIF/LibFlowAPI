@@ -5,6 +5,8 @@ import com.projetos.LibFlowAPI.dtos.BookResponseDto;
 import com.projetos.LibFlowAPI.entities.Book;
 import com.projetos.LibFlowAPI.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -34,8 +36,8 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookResponseDto>> findAll(){
-        List<BookResponseDto> bookList = bookService.findAll();
+    public ResponseEntity<Page<BookResponseDto>> findAll(Pageable pageable){
+        Page<BookResponseDto> bookList = bookService.findAll(pageable);
         return ResponseEntity.ok().body(bookList);
     }
 
