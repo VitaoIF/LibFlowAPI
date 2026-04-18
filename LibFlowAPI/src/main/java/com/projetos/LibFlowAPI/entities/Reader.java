@@ -18,6 +18,7 @@ public class Reader {
     private String name;
 
     @Email(message = "Este campo de conter um valor válido")
+    @Column(unique = true)
     private String email;
 
     @Size(min = 6, max = 60)

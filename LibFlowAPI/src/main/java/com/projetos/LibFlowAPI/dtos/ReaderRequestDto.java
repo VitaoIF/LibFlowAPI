@@ -1,5 +1,6 @@
 package com.projetos.LibFlowAPI.dtos;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -12,6 +13,7 @@ public class ReaderRequestDto {
     private String name;
 
     @Email(message = "Este campo de conter um valor válido")
+    @Column(unique = true)
     private String email;
 
     @Size(min = 6, max = 60)
