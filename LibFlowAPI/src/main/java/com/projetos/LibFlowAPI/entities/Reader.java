@@ -1,8 +1,11 @@
 package com.projetos.LibFlowAPI.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -13,10 +16,17 @@ public class Reader {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Email(message = "Este campo de conter um valor válido")
     private String email;
+
+    @Size(min = 6, max = 60)
     private String password;
     private String phone;
     private LocalDate localDate;
+
+    @OneToMany(mappedBy = "reader")
+    private List<Loan> loans;
 
     public Reader() {
     }
