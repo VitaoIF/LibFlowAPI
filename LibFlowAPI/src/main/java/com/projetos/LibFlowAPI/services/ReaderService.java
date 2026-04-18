@@ -1,12 +1,16 @@
 package com.projetos.LibFlowAPI.services;
 
+import com.projetos.LibFlowAPI.dtos.ReaderRequestDto;
+import com.projetos.LibFlowAPI.dtos.ReaderResponseDto;
 import com.projetos.LibFlowAPI.entities.Reader;
+import com.projetos.LibFlowAPI.mappers.ReaderMapper;
 import com.projetos.LibFlowAPI.repositories.ReaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ReaderService {
@@ -14,34 +18,38 @@ public class ReaderService {
     @Autowired
     private ReaderRepository repository;
 
-    public Reader insert(Reader reader){
-        return repository.save(reader);
+    public ReaderResponseDto insert(ReaderRequestDto readerRequestDto){
+        Reader reader = ReaderMapper.toEntity(readerRequestDto);
+        Reader saved = repository.save(reader);
+        return ReaderMapper.toResponseDTO(saved);
     }
 
-    public List<Reader> findAll(){
-        return repository.findAll();
+    public Page<ReaderResponseDto> findAll(Pageable pageable){
+        Page<Reader> readers = repository.findAll(pageable);
+        return readers.map(ReaderMapper::toResponseDTO);
     }
 
-    public Reader findById(Long id){
-        Optional<Reader> reader = repository.findById(id);
-        return reader.get();
+    public ReaderResponseDto findById(Long id){
+        Reader reader = repository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encotrado"));
+        return ReaderMapper.toResponseDTO(reader);
     }
 
     public void delete(Long id){
         repository.deleteById(id);
     }
 
-    public Reader update(Long id, Reader reader){
+    public ReaderResponseDto update(Long id, ReaderRequestDto readerRequestDto){
         Reader entity = repository.getReferenceById(id);
-        updateReader(entity, reader);
-        return repository.save(entity);
+        updateReader(entity, readerRequestDto);
+        Reader atualizado = repository.save(entity);
+        return ReaderMapper.toResponseDTO(atualizado);
     }
 
     public List<Reader> creationDate(){
         return repository.findByOrderByLocalDateAsc();
     }
 
-    private void updateReader(Reader entity, Reader reader){
+    private void updateReader(Reader entity, ReaderRequestDto reader){
         entity.setName(reader.getName());
         entity.setEmail(reader.getEmail());
         entity.setPhone(reader.getPhone());
