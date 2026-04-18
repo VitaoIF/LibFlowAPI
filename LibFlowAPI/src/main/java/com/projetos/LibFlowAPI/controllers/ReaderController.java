@@ -1,8 +1,13 @@
 package com.projetos.LibFlowAPI.controllers;
 
+import com.projetos.LibFlowAPI.dtos.ReaderRequestDto;
+import com.projetos.LibFlowAPI.dtos.ReaderResponseDto;
 import com.projetos.LibFlowAPI.entities.Reader;
 import com.projetos.LibFlowAPI.services.ReaderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,8 +23,8 @@ public class ReaderController {
     private ReaderService service;
 
     @PostMapping
-    public ResponseEntity<Reader> insert(@RequestBody Reader reader){
-        reader = service.insert(reader);
+    public ResponseEntity<ReaderResponseDto> insert(@Valid @RequestBody ReaderRequestDto readerRequestDto){
+        ReaderResponseDto reader = service.insert(readerRequestDto);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -29,8 +34,8 @@ public class ReaderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Reader>> findAll(){
-        List<Reader> readers = service.findAll();
+    public ResponseEntity<Page<ReaderResponseDto>> findAll(Pageable pageable){
+        Page<ReaderResponseDto> readers = service.findAll(pageable);
         return ResponseEntity.ok().body(readers);
     }
 
@@ -41,8 +46,8 @@ public class ReaderController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Reader> findById(@PathVariable Long id){
-        Reader reader = service.findById(id);
+    public ResponseEntity<ReaderResponseDto> findById(@PathVariable Long id){
+        ReaderResponseDto reader = service.findById(id);
         return ResponseEntity.ok().body(reader);
     }
 
@@ -53,9 +58,9 @@ public class ReaderController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Reader> update(@PathVariable Long id, @RequestBody Reader reader){
-        reader = service.update(id, reader);
-        return ResponseEntity.ok().body(reader);
+    public ResponseEntity<ReaderResponseDto> update(@PathVariable Long id, @RequestBody ReaderRequestDto reader){
+        ReaderResponseDto responseDto = service.update(id, reader);
+        return ResponseEntity.ok().body(responseDto);
     }
 
 }
