@@ -7,14 +7,15 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "tb_reader")
 public class Reader {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
     private String name;
 
     @Email(message = "Este campo de conter um valor válido")
@@ -32,7 +33,7 @@ public class Reader {
     public Reader() {
     }
 
-    public Reader(Long id, String name, String email, String password, String phone, LocalDate localDate) {
+    public Reader(UUID id, String name, String email, String password, String phone, LocalDate localDate) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -49,11 +50,11 @@ public class Reader {
         this.email = email;
     }
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
