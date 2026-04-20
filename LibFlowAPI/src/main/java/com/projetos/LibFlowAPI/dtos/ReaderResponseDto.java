@@ -4,9 +4,10 @@ import jakarta.validation.constraints.Email;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.UUID;
 
 public class ReaderResponseDto {
-    private Long id;
+    private UUID id;
     private String name;
 
     @Email(message = "Este campo de conter um valor válido")
@@ -17,7 +18,7 @@ public class ReaderResponseDto {
     public ReaderResponseDto() {
     }
 
-    public ReaderResponseDto(String email, Long id, LocalDate localDate, String name, String phone) {
+    public ReaderResponseDto(String email, UUID id, LocalDate localDate, String name, String phone) {
         this.email = email;
         this.id = id;
         this.localDate = localDate;
@@ -30,7 +31,7 @@ public class ReaderResponseDto {
     }
 
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
