@@ -17,25 +17,31 @@ public class LoanMapper {
     }
 
     public static LoanResponseDto toResponseDto(Loan loan){
-        return new LoanResponseDto(
-                        new BookResponseDto(
-                                loan.getBook().getAuthor(),
-                                loan.getBook().isAvailable(),
-                                loan.getBook().getCategory(),
-                                loan.getBook().getId(),
-                                loan.getBook().getIsbn(),
-                                loan.getBook().getTitle()
-                        ),
-                loan.getId(),
-                loan.getLoanDate(),
-                new ReaderResponseDto(
-                                loan.getReader().getEmail(),
-                                loan.getReader().getId(),
-                                loan.getReader().getLocalDate(),
-                                loan.getReader().getName(),
-                                loan.getReader().getPhone()
-                        ),
-                loan.getReturnDate(),
-                loan.getStatus());
+
+            ReaderResponseDto readerDto = new ReaderResponseDto(
+                    loan.getReader().getEmail(),
+                    loan.getReader().getId(),
+                    loan.getReader().getLocalDate(),
+                    loan.getReader().getName(),
+                    loan.getReader().getPhone()
+            );
+
+            BookResponseDto bookDto = new BookResponseDto(
+                    loan.getBook().getAuthor(),
+                    loan.getBook().isAvailable(),
+                    loan.getBook().getCategory(),
+                    loan.getBook().getId(),
+                    loan.getBook().getIsbn(),
+                    loan.getBook().getTitle()
+            );
+
+            return new LoanResponseDto(
+                    loan.getId(),
+                    loan.getStatus(),
+                    loan.getLoanDate(),
+                    loan.getReturnDate(),
+                    readerDto,
+                    bookDto
+            );
     }
 }
