@@ -16,13 +16,13 @@ public class LoanResponseDto {
     public LoanResponseDto() {
     }
 
-    public LoanResponseDto(BookResponseDto book, Long id, LocalDate loanDate, ReaderResponseDto reader, LocalDate returnDate, LoanStatus status) {
-        this.book = book;
+    public LoanResponseDto(Long id, LoanStatus status, LocalDate loanDate, LocalDate returnDate, ReaderResponseDto reader, BookResponseDto book) {
         this.id = id;
-        this.loanDate = loanDate;
-        this.reader = reader;
-        this.returnDate = returnDate;
         this.status = status;
+        this.loanDate = loanDate;
+        this.returnDate = returnDate;
+        this.reader = reader;
+        this.book = book;
     }
 
     public BookResponseDto getBook() {
