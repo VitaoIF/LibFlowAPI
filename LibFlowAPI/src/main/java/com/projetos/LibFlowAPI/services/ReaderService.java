@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ReaderService {
@@ -29,16 +30,16 @@ public class ReaderService {
         return readers.map(ReaderMapper::toResponseDTO);
     }
 
-    public ReaderResponseDto findById(Long id){
+    public ReaderResponseDto findById(UUID id){
         Reader reader = repository.findById(id).orElseThrow(() -> new RuntimeException("Livro não encotrado"));
         return ReaderMapper.toResponseDTO(reader);
     }
 
-    public void delete(Long id){
+    public void delete(UUID id){
         repository.deleteById(id);
     }
 
-    public ReaderResponseDto update(Long id, ReaderRequestDto readerRequestDto){
+    public ReaderResponseDto update(UUID id, ReaderRequestDto readerRequestDto){
         Reader entity = repository.getReferenceById(id);
         updateReader(entity, readerRequestDto);
         Reader atualizado = repository.save(entity);
