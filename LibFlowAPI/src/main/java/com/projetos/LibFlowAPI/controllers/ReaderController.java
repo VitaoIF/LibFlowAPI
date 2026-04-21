@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/readers")
@@ -46,19 +47,19 @@ public class ReaderController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ReaderResponseDto> findById(@PathVariable Long id){
+    public ResponseEntity<ReaderResponseDto> findById(@PathVariable UUID id){
         ReaderResponseDto reader = service.findById(id);
         return ResponseEntity.ok().body(reader);
     }
 
     @DeleteMapping(value="/{id}")
-    public ResponseEntity<Void> delete(@RequestBody Long id){
+    public ResponseEntity<Void> delete(@RequestBody UUID id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ReaderResponseDto> update(@PathVariable Long id, @RequestBody ReaderRequestDto reader){
+    public ResponseEntity<ReaderResponseDto> update(@PathVariable UUID id, @RequestBody ReaderRequestDto reader){
         ReaderResponseDto responseDto = service.update(id, reader);
         return ResponseEntity.ok().body(responseDto);
     }
