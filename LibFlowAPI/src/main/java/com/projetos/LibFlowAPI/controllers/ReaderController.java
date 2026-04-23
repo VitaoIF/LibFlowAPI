@@ -53,7 +53,7 @@ public class ReaderController {
     }
 
     @DeleteMapping(value="/{id}")
-    public ResponseEntity<Void> delete(@RequestBody UUID id){
+    public ResponseEntity<Void> delete(@PathVariable UUID id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
