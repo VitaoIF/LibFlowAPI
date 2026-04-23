@@ -10,6 +10,8 @@ import com.projetos.LibFlowAPI.repositories.BookRepository;
 import com.projetos.LibFlowAPI.repositories.LoanRepository;
 import com.projetos.LibFlowAPI.repositories.ReaderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,5 +42,20 @@ public class LoanService {
         loan = loanRepository.save(loan);
 
         return LoanMapper.toResponseDto(loan);
+    }
+
+    public Page<LoanResponseDto> findAll(Pageable pageable){
+        Page<Loan> loans = loanRepository.findAll(pageable);
+        return loans.map(LoanMapper::toResponseDto);
+    }
+
+    public LoanResponseDto findById(Long id){
+        Loan loan = loanRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Empréstimo não encontrado"));
+        return LoanMapper.toResponseDto(loan);
+    }
+
+    public void delete (Long id){
+        loanRepository.deleteById(id);
     }
 }
