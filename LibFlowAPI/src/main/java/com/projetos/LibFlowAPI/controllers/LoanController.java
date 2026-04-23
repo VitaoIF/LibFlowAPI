@@ -37,5 +37,11 @@ public class LoanController {
         return ResponseEntity.ok().body(loan);
     }
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<LoanResponseDto> findById(@PathVariable Long id){
+        LoanResponseDto loan = service.findById(id);
+        return ResponseEntity.ok().body(loan);
+    }
+
 
 }
