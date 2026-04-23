@@ -2,7 +2,6 @@ package com.projetos.LibFlowAPI.controllers;
 
 import com.projetos.LibFlowAPI.dtos.LoanRequestDto;
 import com.projetos.LibFlowAPI.dtos.LoanResponseDto;
-import com.projetos.LibFlowAPI.entities.Loan;
 import com.projetos.LibFlowAPI.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
