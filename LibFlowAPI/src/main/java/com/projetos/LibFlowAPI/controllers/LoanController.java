@@ -47,4 +47,10 @@ public class LoanController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<LoanResponseDto> update(@PathVariable Long id, @RequestBody LoanRequestDto dto){
+        LoanResponseDto responseDto = service.update(id, dto);
+        return ResponseEntity.ok().body(responseDto);
+    }
 }
