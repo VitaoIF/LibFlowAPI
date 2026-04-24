@@ -58,4 +58,15 @@ public class LoanService {
     public void delete (Long id){
         loanRepository.deleteById(id);
     }
+
+    public LoanResponseDto update(Long id, LoanRequestDto loanRequestDto){
+       Loan entity = loanRepository.getReferenceById(id);
+       updateLoan(entity, loanRequestDto);
+       Loan loanUdpated = loanRepository.save(entity);
+       return LoanMapper.toResponseDto(loanUdpated);
+    }
+
+    private void updateLoan(Loan entity, LoanRequestDto dto){
+        entity.setReturnDate(dto.getReturnDate());
+    }
 }
